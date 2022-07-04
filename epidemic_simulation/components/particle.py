@@ -53,7 +53,7 @@ class Particle(pygame.sprite.Sprite):
             self.vel /= vel_norm
 
         if self.randomize:
-            self.vel += np.random.rand(2) * 2 -1
+            self.vel += np.random.rand(2) * 2 - 1
 
         if self.killSwitch_on:
             self.cycles_to_fate -= 1
