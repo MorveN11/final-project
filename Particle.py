@@ -1,10 +1,6 @@
 import numpy as np
 import pygame, sys
-
-BLACK = (0, 0, 0)
-WHITE = (255, 255, 255)
-BACKGROUND = WHITE
-BLUE = (0, 100, 255)
+from Utils import BLUE, BACKGROUND, BLACK, WIDTH, HEIGHT
 
 
 class Particle(pygame.sprite.Sprite):
@@ -42,12 +38,10 @@ class Particle(pygame.sprite.Sprite):
         self.rect.y = y
 
 
-WIDTH = 600
-HEIGHT = 400
 pygame.init()
 screen = pygame.display.set_mode([WIDTH, HEIGHT])
 container = pygame.sprite.Group()
-
+#crea los puntos
 for i in range(100):
     x = np.random.randint(0, WIDTH + 1)
     y = np.random.randint(0, HEIGHT + 1)
@@ -58,7 +52,7 @@ for i in range(100):
 T = 1000
 
 clock = pygame.time.Clock()
-
+# inicia
 for i in range(T):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
