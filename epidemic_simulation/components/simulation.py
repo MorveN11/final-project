@@ -2,9 +2,9 @@ import sys
 import pygame
 import numpy as np
 
+
 from epidemic_simulation.utils.constants import WIDTH, HEIGHT, BLUE, GREEN, BACKGROUND, PURPLE
 from epidemic_simulation.components.particle import Particle
-
 
 class Simulation:
 
@@ -49,6 +49,16 @@ class Simulation:
 
         self.all_container.add(susceptible_particles, infected_particles)
 
+
+        ##ADDING STATS
+        stats = pygame.Surface(
+            (self.WIDTH // 4, self.HEIGHT // 4)
+        )
+
+        stats.fill(GREY)
+        stats.set_alpha(230)
+        stats_pos = (self.WIDTH // 40, self.HEIGHT // 40)
+
         clock = pygame.time.Clock()
         for i in range(self.T):
             for event in pygame.event.get():
@@ -58,7 +68,26 @@ class Simulation:
             self.all_container.update()
             screen.fill(BACKGROUND)
 
+
             # If susceptible group collide with an infected group. Removes the group.
+            ##update stats
+            stats_height = stats.get_height()
+            stats_width = stats.get_width()
+            n_infected_now = len(self.infected_container)
+            n_population_now = len(self.all_container)
+            n_recovery_now = len(self.recovered_container)
+
+            t = int((i / self.T) * stats_width)
+            y_infected = int(stats_height - (n_infected_now / n_population_now) * stats_height)
+            y_dead = int(((self.N - n_population_now) / self.N) * stats_height)
+            y_recovered = int ((n_recovery_now / n_population_now) * stats_height)
+            stats_graph = pygame.PixelArray(stats)
+            stats_graph[t, y_infected:] = pygame.Color(*GREEN)
+            stats_graph[t, :y_dead] = pygame.Color(*YELLOW)
+
+            stats_graph[t, y_dead:y_dead + y_recovered ] = pygame.Color(*PURPLE)
+            #infection
+            ## if susceptible group collide with infected group. Removes the group
             collision_group = pygame.sprite.groupcollide(
                 self.susceptible_container,
                 self.infected_container,
@@ -87,6 +116,9 @@ class Simulation:
                 self.infected_container.remove(*recovered)
                 self.all_container.remove(*recovered)
 
+            del stats_graph
+            stats.unlock()
+            screen.blit(stats, stats_pos)
             self.all_container.draw(screen)
             pygame.display.flip()
             clock.tick(30)
