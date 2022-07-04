@@ -36,6 +36,19 @@ class Simulation:
             list_guy.append(guy)
         return list_guy
 
+
+    def init_particules(self):
+        pass
+
+    def init_stats(self):
+        pass
+
+    def update(self):
+        pass
+
+    def check_collide(self):
+        pass
+
     # generates all the stuff needed to simulate.
     def start(self, randomize=False):
         self.N = self.n_susceptible + self.n_infected

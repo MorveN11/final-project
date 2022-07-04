@@ -48,12 +48,10 @@ class Particle(pygame.sprite.Sprite):
         self.rect.x = x
         self.rect.y = y
 
-        vel_norm = np.linalg.norm(self.vel)
-        if vel_norm > 3:
-            self.vel /= vel_norm
+
 
         if self.randomize:
-            self.vel += np.random.rand(2) * 2 -1
+            self.vel += np.random.rand(2) * 2 - 1
 
         if self.killSwitch_on:
             self.cycles_to_fate -= 1
@@ -61,7 +59,7 @@ class Particle(pygame.sprite.Sprite):
                 self.killSwitch_on = False
                 some_number = np.random.rand()
                 if self.mortality_rate > some_number:
-                    self.alive = False
+                    self.kill()
                 else:
                     self.recovered = True
 
