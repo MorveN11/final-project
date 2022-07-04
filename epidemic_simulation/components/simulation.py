@@ -3,7 +3,7 @@ import pygame
 import numpy as np
 
 
-from epidemic_simulation.utils.constants import WIDTH, HEIGHT, BLUE, GREEN, BACKGROUND, PURPLE
+from epidemic_simulation.utils.constants import WIDTH, HEIGHT, BLUE, GREEN, BACKGROUND, PURPLE, GREY, YELLOW
 from epidemic_simulation.components.particle import Particle
 
 class Simulation:
