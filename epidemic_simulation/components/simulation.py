@@ -3,7 +3,7 @@ import pygame
 import numpy as np
 
 
-from epidemic_simulation.utils.constants import WIDTH, HEIGHT, BLUE, GREEN, BACKGROUND, PURPLE, GREY, YELLOW
+from epidemic_simulation.utils.constants import WIDTH, HEIGHT, BLUE, GREEN, BACKGROUND, PURPLE, GREY, YELLOW, RED, BLACK
 from epidemic_simulation.components.particle import Particle
 
 class Simulation:
@@ -41,12 +41,11 @@ class Simulation:
         self.N = self.n_susceptible + self.n_infected
         pygame.init()
         screen = pygame.display.set_mode([self.WIDTH, self.HEIGHT])
-        susceptible_particles = self.createParticles(self.n_susceptible, randomize)
-        infected_particles = self.createParticles(self.n_infected, randomize, color=(50, 150, 50))
+        susceptible_particles = self.createParticles(self.n_susceptible, randomize, color=(224,224,224) )
+        infected_particles = self.createParticles(self.n_infected, randomize, color=RED)
 
         self.susceptible_container.add(susceptible_particles)
         self.infected_container.add(infected_particles)
-
         self.all_container.add(susceptible_particles, infected_particles)
 
 
@@ -82,10 +81,9 @@ class Simulation:
             y_dead = int(((self.N - n_population_now) / self.N) * stats_height)
             y_recovered = int ((n_recovery_now / n_population_now) * stats_height)
             stats_graph = pygame.PixelArray(stats)
-            stats_graph[t, y_infected:] = pygame.Color(*GREEN)
-            stats_graph[t, :y_dead] = pygame.Color(*YELLOW)
-
-            stats_graph[t, y_dead:y_dead + y_recovered ] = pygame.Color(*PURPLE)
+            stats_graph[t, y_infected:] = pygame.Color(*RED)
+            stats_graph[t, :y_dead] = pygame.Color(*BLACK)
+            stats_graph[t, y_dead:y_dead + y_recovered ] = pygame.Color(*GREEN)
             #infection
             ## if susceptible group collide with infected group. Removes the group
             collision_group = pygame.sprite.groupcollide(
@@ -96,7 +94,7 @@ class Simulation:
             )
 
             for guy in collision_group:
-                new_guy = guy.respawn(GREEN)
+                new_guy = guy.respawn(RED)
                 new_guy.vel *= -1
                 new_guy.killSwitch(
                     self.cycles_to_fate,
@@ -108,7 +106,7 @@ class Simulation:
             recovered = []
             for guy in self.infected_container:
                 if guy.is_recovered():
-                    new_guy = guy.respawn(PURPLE)
+                    new_guy = guy.respawn(GREEN)
                     self.recovered_container.add(new_guy)
                     self.all_container.add(new_guy)
                     recovered.append(guy)

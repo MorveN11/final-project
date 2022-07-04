@@ -61,7 +61,7 @@ class Particle(pygame.sprite.Sprite):
                 self.killSwitch_on = False
                 some_number = np.random.rand()
                 if self.mortality_rate > some_number:
-                    self.kill()
+                    self.alive = False
                 else:
                     self.recovered = True
 
