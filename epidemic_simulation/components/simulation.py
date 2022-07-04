@@ -7,7 +7,6 @@ from epidemic_simulation.components.particle import Particles
 from epidemic_simulation.utils.constants import WIDTH, HEIGHT, BLUE, GREEN, BACKGROUND, PURPLE, GREY, YELLOW, RED, BLACK
 
 
-
 class Simulation:
 
     def __init__(self, width=WIDTH, height=HEIGHT):
@@ -108,7 +107,7 @@ class Simulation:
             for guy in collision_group:
                 new_guy = guy.respawn(RED)
                 new_guy.vel *= -1
-                new_guy.killSwitch(
+                new_guy.kill_switch(
                     self.cycles_to_fate,
                     self.mortality_rate
                 )

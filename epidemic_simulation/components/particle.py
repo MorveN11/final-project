@@ -29,8 +29,7 @@ class Particles(pygame.sprite.Sprite):
 
         self.randomize = randomize
 
-    def update(self):
-        self.pos += self.vel
+    def update_pos(self):
         x, y = self.pos
         if x < 0:
             self.pos[0] = self.WIDTH
@@ -44,11 +43,11 @@ class Particles(pygame.sprite.Sprite):
         if y > self.HEIGHT:
             self.pos[1] = 0
             x = 0
+        return x, y
 
-        self.rect.x = x
-        self.rect.y = y
-
-
+    def update(self):
+        self.pos += self.vel
+        self.rect.x, self.rect.y = self.update_pos()
 
         if self.randomize:
             self.vel += np.random.rand(2) * 2 - 1
@@ -63,6 +62,9 @@ class Particles(pygame.sprite.Sprite):
                 else:
                     self.recovered = True
 
+    def check_dead(self):
+        pass
+
     # return a new particle with the same attributes but with different color.
     def respawn(self, color):
         return Particles(
@@ -75,7 +77,7 @@ class Particles(pygame.sprite.Sprite):
         )
 
     #
-    def killSwitch(self, cycles_to_fate=20, mortality_rate=0.2):
+    def kill_switch(self, cycles_to_fate=20, mortality_rate=0.2):
         self.killSwitch_on = True
         self.cycles_to_fate = cycles_to_fate
         self.mortality_rate = mortality_rate
