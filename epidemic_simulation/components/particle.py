@@ -4,7 +4,7 @@ import pygame
 from epidemic_simulation.utils.constants import BACKGROUND, BLACK
 
 
-class Particle(pygame.sprite.Sprite):
+class Particles(pygame.sprite.Sprite):
 
     def __init__(self, x, y, width, height, color=BLACK, radius=5, velocity=None, randomize=False):
         super().__init__()
@@ -65,7 +65,7 @@ class Particle(pygame.sprite.Sprite):
 
     # return a new particle with the same attributes but with different color.
     def respawn(self, color):
-        return Particle(
+        return Particles(
             self.rect.x,
             self.rect.y,
             self.WIDTH,

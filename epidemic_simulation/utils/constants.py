@@ -1,15 +1,15 @@
+TITLE = "Epidemic-Simulation"
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 BACKGROUND = WHITE
-
-# Colors
 BLUE = (0, 100, 255)
 GREEN = (50, 150, 50)
 GREY = (230, 230, 230)
 YELLOW = (190, 175, 50)
 PURPLE = (130, 0, 130)
 RED = (153, 0, 0)
-# Size of the screen
 WIDTH = 1280
 HEIGHT = 720
-
+SCREEN_WIDTH = 1280
+SCREEN_HEIGHT = 720
+FPS = 30

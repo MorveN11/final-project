@@ -1,10 +1,12 @@
 import sys
-import pygame
+
 import numpy as np
+import pygame
 
-
+from epidemic_simulation.components.particle import Particles
 from epidemic_simulation.utils.constants import WIDTH, HEIGHT, BLUE, GREEN, BACKGROUND, PURPLE, GREY, YELLOW, RED, BLACK
-from epidemic_simulation.components.particle import Particle
+
+
 
 class Simulation:
 
@@ -32,10 +34,9 @@ class Simulation:
             x = np.random.randint(0, self.WIDTH + 1)
             y = np.random.randint(0, self.HEIGHT + 1)
             vel = np.random.rand(2) * 2 - 1
-            guy = Particle(x, y, WIDTH, HEIGHT, color=color, velocity=vel, randomize=randomize)
+            guy = Particles(x, y, WIDTH, HEIGHT, color=color, velocity=vel, randomize=randomize)
             list_guy.append(guy)
         return list_guy
-
 
     def init_particules(self):
         pass
@@ -54,13 +55,12 @@ class Simulation:
         self.N = self.n_susceptible + self.n_infected
         pygame.init()
         screen = pygame.display.set_mode([self.WIDTH, self.HEIGHT])
-        susceptible_particles = self.createParticles(self.n_susceptible, randomize, color=(224,224,224) )
+        susceptible_particles = self.createParticles(self.n_susceptible, randomize, color=(224, 224, 224))
         infected_particles = self.createParticles(self.n_infected, randomize, color=RED)
 
         self.susceptible_container.add(susceptible_particles)
         self.infected_container.add(infected_particles)
         self.all_container.add(susceptible_particles, infected_particles)
-
 
         ##ADDING STATS
         stats = pygame.Surface(
@@ -80,7 +80,6 @@ class Simulation:
             self.all_container.update()
             screen.fill(BACKGROUND)
 
-
             # If susceptible group collide with an infected group. Removes the group.
             ##update stats
             stats_height = stats.get_height()
@@ -92,12 +91,12 @@ class Simulation:
             t = int((i / self.T) * stats_width)
             y_infected = int(stats_height - (n_infected_now / n_population_now) * stats_height)
             y_dead = int(((self.N - n_population_now) / self.N) * stats_height)
-            y_recovered = int ((n_recovery_now / n_population_now) * stats_height)
+            y_recovered = int((n_recovery_now / n_population_now) * stats_height)
             stats_graph = pygame.PixelArray(stats)
             stats_graph[t, y_infected:] = pygame.Color(*RED)
             stats_graph[t, :y_dead] = pygame.Color(*BLACK)
-            stats_graph[t, y_dead:y_dead + y_recovered ] = pygame.Color(*GREEN)
-            #infection
+            stats_graph[t, y_dead:y_dead + y_recovered] = pygame.Color(*GREEN)
+            # infection
             ## if susceptible group collide with infected group. Removes the group
             collision_group = pygame.sprite.groupcollide(
                 self.susceptible_container,
