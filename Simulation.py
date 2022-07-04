@@ -25,6 +25,7 @@ class Simulation:
         self.cycles_to_fate = 20
         self.mortality_rate = 0.2
 
+    # create N particles with the specified color and return a list with the particles
     def createParticles(self, n, randomize, color=BLUE):
         list_guy= []
         for i in range(n):
@@ -35,6 +36,7 @@ class Simulation:
             list_guy.append(guy)
         return list_guy
 
+    #generates all the stuff needed to simulate.
     def start(self, randomize=False):
         self.N = self.n_susceptible + self.n_infected
         pygame.init()
@@ -49,7 +51,6 @@ class Simulation:
 
 
         clock = pygame.time.Clock()
-        # inicia
         for i in range(self.T):
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -58,8 +59,7 @@ class Simulation:
             self.all_container.update()
             screen.fill(BACKGROUND)
 
-            # new infections
-
+            # if susceptible group collide with infected group. Removes the group
             collision_group = pygame.sprite.groupcollide(
                 self.susceptible_container,
                 self.infected_container,

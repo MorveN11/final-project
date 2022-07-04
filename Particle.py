@@ -48,7 +48,8 @@ class Particle(pygame.sprite.Sprite):
             self.vel /=vel_norm
 
         if self.randomize:
-            self.vel += np.random.rand(2) * 2 -1
+            #self.vel += np.random.rand(2) * 2 -1
+            self.vel = self.vel
 
         if self.killswith_on:
             self.cycles_to_fate -= 1
@@ -60,6 +61,7 @@ class Particle(pygame.sprite.Sprite):
                 else:
                     self.recovered = True
 
+    # return a new particle with the same attributes but with different color
     def respawn(self, color, radius=5):
         return Particle(
             self.rect.x,
@@ -70,10 +72,12 @@ class Particle(pygame.sprite.Sprite):
             velocity=self.vel
         )
 
+    #
     def killswitch(self, cycles_to_fate=20, mortality_rate=0.2):
         self.killswith_on = True
         self.cycles_to_fate = cycles_to_fate
         self.mortality_rate = mortality_rate
 
+    # getter of recovered attribute
     def is_recovered(self):
         return self.recovered
