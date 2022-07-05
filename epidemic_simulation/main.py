@@ -1,4 +1,4 @@
-from epidemic_simulation.components.simulation import Simulation
+from epidemic_simulation.components.Simulation import Simulation
 
 if __name__ == "__main__":
     simulation = Simulation()
