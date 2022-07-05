@@ -2,24 +2,16 @@ import pygame
 
 from epidemic_simulation.utils.constants import SCREEN_WIDTH, SCREEN_HEIGHT
 
-FONT_STYLE = "freesansbold.ttf"
+FONT_STYLE = pygame.font.get_default_font()
 BLACK_COLOR = (0, 0, 0)
 WHITE_COLOR = (255, 255, 255)
 
 
-def get_score_element(points, type_of_group):
-    ##font = pygame.font.Font(FONT_STYLE, 22)
-    #if not dark:
-    #    text = font.render("Points: " + str(points), True, BLACK_COLOR)
-    #else:
-    #    text = font.render("Points: " + str(points), True, WHITE_COLOR)
-    #text_rect = text.get_rect()
-    #text_rect.center = (1000, 50)
-    #return text, text_rect
-    font = pygame.font.Font(FONT_STYLE, 22)
+def get_element(points, type_of_group, pos_x, pos_y):
+    font = pygame.font.Font(FONT_STYLE, 16)
     text = font.render("Total " + type_of_group + ": " + str(points), True, BLACK_COLOR)
     text_rect = text.get_rect()
-    text_rect.center = (100, 50)
+    text_rect.center = (pos_x, pos_y)
     return text, text_rect
 
 

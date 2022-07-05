@@ -4,6 +4,7 @@ import numpy as np
 import pygame
 
 from epidemic_simulation.components.Particles import Particles
+from epidemic_simulation.utils import text_utils
 from epidemic_simulation.utils.constants import WIDTH, HEIGHT, BLUE, GREEN, BACKGROUND, PURPLE, GREY, YELLOW, RED, BLACK
 
 
@@ -63,7 +64,6 @@ class Simulation:
         self.N = self.n_susceptible + self.n_infected
         pygame.init()
         screen = pygame.display.set_mode([self.WIDTH, self.HEIGHT])
-
         self.init_particles(susceptible=susceptible, infected=infected, randomize=randomize)
 
         ##ADDING STATS
@@ -73,8 +73,8 @@ class Simulation:
 
         stats.fill(GREY)
         stats.set_alpha(230)
-        stats_pos = (self.WIDTH // 40, self.HEIGHT // 40)
-
+        #stats_pos = (self.WIDTH // 40, self.HEIGHT // 40)
+        stats_pos = (50, 700)
         clock = pygame.time.Clock()
         for i in range(self.T):
             for event in pygame.event.get():
@@ -92,17 +92,28 @@ class Simulation:
             n_population_now = len(self.all_container)
             n_recovery_now = len(self.recovered_container)
             n_susceptible_now = len(self.susceptible_container)
+            n_dead_now = (self.N - n_population_now)
 
             t = int((i / self.T) * stats_width)
             y_infected = int(stats_height - (n_infected_now / n_population_now) * stats_height)
             y_susceptible = int((stats_height - n_susceptible_now) * stats_height)
-            y_dead = int(((self.N - n_population_now) / self.N) * stats_height)
+            y_dead = int((n_dead_now/ self.N) * stats_height)
             y_recovered = int((n_recovery_now / n_population_now) * stats_height)
             stats_graph = pygame.PixelArray(stats)
             stats_graph[t, :y_susceptible] = pygame.Color(*BLUE)
             stats_graph[t, y_infected:] = pygame.Color(*RED)
             stats_graph[t, :y_dead] = pygame.Color(*BLACK)
             stats_graph[t, y_dead:y_dead + y_recovered] = pygame.Color(*GREEN)
+
+            total_text, total_text_rect = text_utils.get_element(self.N, "population", 650, 740)
+            susceptible_text, susceptible_text_rect = text_utils.get_element(n_susceptible_now, "susceptible", 650, 765)
+            infected_text, infected_text_rect = text_utils.get_element(n_infected_now, "infected", 650, 790)
+            dead_text, dead_text_rect = text_utils.get_element(n_dead_now, "dead", 650, 815)
+
+            screen.blit(total_text, total_text_rect)
+            screen.blit(susceptible_text, susceptible_text_rect)
+            screen.blit(infected_text, infected_text_rect)
+            screen.blit(dead_text, dead_text_rect)
             # infection
             ## if susceptible group collide with infected group. Removes the group
             collision_group = pygame.sprite.groupcollide(
