@@ -9,7 +9,8 @@ from epidemic_simulation.utils.constants import WIDTH, HEIGHT, BLUE, GREEN, BACK
 
 class Simulation:
 
-    def __init__(self, width=WIDTH, height=HEIGHT, susceptible=20, infected=1, t=1000, cycles_to_fate=20, mortality_rate=0.2):
+    def __init__(self, width=WIDTH, height=HEIGHT, susceptible=100, infected=5, t=1000, cycles_to_fate=20,
+                 mortality_rate=0.2):
         self.N = None
         self.WIDTH = width
         self.HEIGHT = height
@@ -44,7 +45,6 @@ class Simulation:
         self.susceptible_container.add(susceptible_particles)
         self.infected_container.add(infected_particles)
         self.all_container.add(susceptible_particles, infected_particles)
-
 
     def init_stats(self):
         pass
@@ -91,9 +91,11 @@ class Simulation:
             n_infected_now = len(self.infected_container)
             n_population_now = len(self.all_container)
             n_recovery_now = len(self.recovered_container)
+            n_susceptible_now = len(self.susceptible_container)
 
             t = int((i / self.T) * stats_width)
             y_infected = int(stats_height - (n_infected_now / n_population_now) * stats_height)
+            y_susceptible = int((stats_height - n_susceptible_now) * stats_height)
             y_dead = int(((self.N - n_population_now) / self.N) * stats_height)
             y_recovered = int((n_recovery_now / n_population_now) * stats_height)
             stats_graph = pygame.PixelArray(stats)
