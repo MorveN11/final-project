@@ -99,6 +99,7 @@ class Simulation:
             y_dead = int(((self.N - n_population_now) / self.N) * stats_height)
             y_recovered = int((n_recovery_now / n_population_now) * stats_height)
             stats_graph = pygame.PixelArray(stats)
+            stats_graph[t, :y_susceptible] = pygame.Color(*BLUE)
             stats_graph[t, y_infected:] = pygame.Color(*RED)
             stats_graph[t, :y_dead] = pygame.Color(*BLACK)
             stats_graph[t, y_dead:y_dead + y_recovered] = pygame.Color(*GREEN)
