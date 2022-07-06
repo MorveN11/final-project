@@ -1,7 +1,6 @@
 
 import pygame
 
-from epidemic_simulation.components.partcles import Particles
 from epidemic_simulation.utils import text_utils
 from epidemic_simulation.utils.constants import TITLE, WHITE, FPS, SCREEN_WIDTH, SCREEN_HEIGHT
 

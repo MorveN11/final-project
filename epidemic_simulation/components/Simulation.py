@@ -47,18 +47,6 @@ class Simulation:
         self.infected_container.add(infected_particles)
         self.all_container.add(susceptible_particles, infected_particles)
 
-    def init_stats(self):
-        pass
-
-    def update(self):
-        pass
-
-    def check_collide(self):
-        pass
-
-    def setup(self):
-        pass
-
     # generates all the stuff needed to simulate.
     def start(self, susceptible=100, infected=5, randomize=False):
         self.N = self.n_susceptible + self.n_infected
@@ -73,7 +61,7 @@ class Simulation:
 
         stats.fill(GREY)
         stats.set_alpha(230)
-        #stats_pos = (self.WIDTH // 40, self.HEIGHT // 40)
+        # stats_pos = (self.WIDTH // 40, self.HEIGHT // 40)
         stats_pos = (50, 700)
         clock = pygame.time.Clock()
         for i in range(self.T):
@@ -97,7 +85,7 @@ class Simulation:
             t = int((i / self.T) * stats_width)
             y_infected = int(stats_height - (n_infected_now / n_population_now) * stats_height)
             y_susceptible = int((stats_height - n_susceptible_now) * stats_height)
-            y_dead = int((n_dead_now/ self.N) * stats_height)
+            y_dead = int((n_dead_now / self.N) * stats_height)
             y_recovered = int((n_recovery_now / n_population_now) * stats_height)
             stats_graph = pygame.PixelArray(stats)
             stats_graph[t, :y_susceptible] = pygame.Color(*BLUE)

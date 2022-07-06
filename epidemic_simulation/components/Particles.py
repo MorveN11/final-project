@@ -62,8 +62,6 @@ class Particles(pygame.sprite.Sprite):
                 else:
                     self.recovered = True
 
-    def check_dead(self):
-        pass
 
     # return a new particle with the same attributes but with different color.
     def respawn(self, color):

@@ -5,5 +5,5 @@ if __name__ == "__main__":
     simulation.n_susceptible = 100
     simulation.n_infected = 5
     simulation.cycles_to_fate = 200
-    simulation.mortality_rate = 0.2
+    simulation.mortality_rate = 0.8
     simulation.start(randomize=True)
